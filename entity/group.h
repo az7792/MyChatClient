@@ -6,26 +6,26 @@
 #include <QJsonObject>
 #include <QPixmap>
 
-class Group : public QObject
+class Group
 {
-    Q_OBJECT
-
 public:
-    explicit Group(QObject *parent = nullptr);
-    Group(int groupid, QString groupname, int ownerid, QObject *parent = nullptr);
+    Group();
+    Group(int groupid,QString groupname,int ownerid);
 
     int getGroupid();
-    QString getGroupname();
     int getOwnerid();
+    QString getGroupname();
     void setGroupid(int groupid);
-    void setGroupname(QString groupname);
+    void setUsername(QString groupname);
     void setOwnerid(int ownerid);
     QPixmap getAvatar();
 
+
     static Group toGroup(QJsonObject jsonObject);
 
+
 private:
-    int groupid = -1;
+    int groupid=-1;
     int ownerid = -1;
     QString groupname;
 };
