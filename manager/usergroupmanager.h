@@ -59,13 +59,7 @@ public:
     static QVector<Group> getGroupList(int Uid);
 
 private:
-    static QNetworkAccessManager* networkManager;
+    static QNetworkAccessManager networkManager;
     static QJsonDocument sendPostRequest(QString endpoint, QUrlQuery postData);
-
-    static void initializeNetworkManager() {//需要在程序一开始初始化一次
-        if (!networkManager) {
-            networkManager = new QNetworkAccessManager();
-        }
-    }
 };
 #endif // USERGROUPMANAGER_H

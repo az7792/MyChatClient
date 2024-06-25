@@ -1,25 +1,24 @@
 #include "usergroupmanager.h"
-#include <QBuffer>
-#include <QUrlQuery>
 
 
 const QString UserGroupManager::HOST_NAME = "localhost";
 const int UserGroupManager::PORT = 8080;
 const QString UserGroupManager::BASE_URL = "http://" + UserGroupManager::HOST_NAME + ":" + QString::number(UserGroupManager::PORT) + "/";
-QNetworkAccessManager* UserGroupManager::networkManager = nullptr;
+QNetworkAccessManager UserGroupManager::networkManager;
 
-UserGroupManager::UserGroupManager() {}
 
-// 发POST请求
-QJsonDocument UserInfoManager::sendPostRequest(QString endpoint, QUrlQuery postData)
+// 发POST请求,传入接口地址和数据，返回jsonDocument
+QJsonDocument UserGroupManager::sendPostRequest(QString endpoint, QUrlQuery postData)
 {
     QNetworkRequest request(QUrl(BASE_URL + endpoint));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
     // 发送POST请求
-    QNetworkReply *reply = networkManager->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
+    QNetworkReply *reply = networkManager.post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
+
     // 等待请求完成
     QEventLoop loop;
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
     // 解析响应
@@ -37,8 +36,9 @@ QJsonDocument UserInfoManager::sendPostRequest(QString endpoint, QUrlQuery postD
     return jsonDocument;
 }
 
+
 // 登录请求ByEmail
-bool UserInfoManager::login(QString email, QString password)
+bool UserGroupManager::login(QString email, QString password)
 {
     if (!isEmailValid(email))
         return false;
@@ -64,7 +64,7 @@ bool UserInfoManager::login(QString email, QString password)
 }
 
 // 登录请求ByUID
-bool UserInfoManager::login(int UID, QString password)
+bool UserGroupManager::login(int UID, QString password)
 {
     if (UID <= 0)
         return false;
@@ -90,7 +90,7 @@ bool UserInfoManager::login(int UID, QString password)
 }
 
 // 注册请求
-bool UserInfoManager::registerUser(QString username, QString email, QString password, QPixmap pixmap)
+bool UserGroupManager::registerUser(QString username, QString email, QString password, QPixmap pixmap)
 {
     // 验证数据格式
     if (isUsernameValid(username) == false)
@@ -133,7 +133,7 @@ bool UserInfoManager::registerUser(QString username, QString email, QString pass
 }
 
 // 匹配验证码
-bool UserInfoManager::matchCaptcha(QString email, QString code)
+bool UserGroupManager::matchCaptcha(QString email, QString code)
 {
     // 构造参数
     QUrlQuery postData;
@@ -153,7 +153,7 @@ bool UserInfoManager::matchCaptcha(QString email, QString code)
 }
 
 // 通过邮箱获取验证码
-bool UserInfoManager::getCaptchaByEmail(QString email)
+bool UserGroupManager::getCaptchaByEmail(QString email)
 {
     // 构造参数
     QUrlQuery postData;
@@ -172,95 +172,52 @@ bool UserInfoManager::getCaptchaByEmail(QString email)
 }
 
 // 注销用户
-bool UserInfoManager::deleteUser(int UID)
+bool UserGroupManager::deleteUser(int UID)
 {
 }
 // 用户是否存在
-bool UserInfoManager::isUserExist(int UID)
+bool UserGroupManager::isUserExist(int UID)
 {
-    QNetworkRequest request;
-    request.setUrl(QUrl(BASE_URL + "exists/uid?uid=" + QString::number(UID)));
-    QNetworkReply *reply = networkManager->get(request); // 发送 GET 请求，并获取返回的响应
+    // 构造参数
+    QUrlQuery postData;
+    postData.addQueryItem("uid",QString::number(UID));
 
-    QEventLoop loop;
-    // 当请求完成时，中断事件循环
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec(); // 等待请求完成
+    // 发送POST请求
+    QJsonDocument jsonDocument = sendPostRequest("exists/uid", postData);
 
-    bool userExists = false; // 默认用户不存在
-    if (reply->isFinished() && reply->error() == QNetworkReply::NoError)
-    {
-        // 读取响应数据
-        QByteArray responseData = reply->readAll();
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
-        userExists = jsonDocument.object()["exist"].toBool();
-    }
-    else
-    {
-        qDebug() << "Error: " << reply->errorString();
-    }
-    reply->deleteLater();
-    return userExists;
+    // 读取响应数据
+    return jsonDocument.object()["exist"].toBool();
 }
 
-bool UserInfoManager::isGroupExist(int groupID)
+bool UserGroupManager::isGroupExist(int groupID)
 {
-    QNetworkRequest request;
-    request.setUrl(QUrl(BASE_URL + "exists/groupid?groupid=" + QString::number(groupID)));
+    // 构造参数
+    QUrlQuery postData;
+    postData.addQueryItem("groupid",QString::number(groupID));
 
-    QNetworkReply *reply = networkManager->get(request); // 发送 GET 请求，并获取返回的响应
+    // 发送POST请求
+    QJsonDocument jsonDocument = sendPostRequest("exists/groupid", postData);
 
-    QEventLoop loop;
-    // 当请求完成时，中断事件循环
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec(); // 等待请求完成
-
-    bool groupExists = false; // 默认群组不存在
-    if (reply->isFinished() && reply->error() == QNetworkReply::NoError)
-    {
-        // 读取响应数据
-        QByteArray responseData = reply->readAll();
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
-        groupExists = jsonDocument.object()["exist"].toBool();
-    }
-    else
-    {
-        qDebug() << "Error: " << reply->errorString();
-    }
-    reply->deleteLater();
-    return groupExists;
+    // 读取响应数据
+    return jsonDocument.object()["exist"].toBool();
 }
 
 // 邮箱是否存在
-bool UserInfoManager::isEmailExist(QString email)
+bool UserGroupManager::isEmailExist(QString email)
 {
-    QNetworkRequest request;
-    request.setUrl(QUrl(BASE_URL + "exists/email?email=" + email));
-    QNetworkReply *reply = networkManager->get(request); // 发送 GET 请求，并获取返回的响应
+    // 构造参数
+    QUrlQuery postData;
+    postData.addQueryItem("email",email);
 
-    QEventLoop loop;
-    // 当请求完成时，中断事件循环
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec(); // 等待请求完成
+    // 发送POST请求
+    QJsonDocument jsonDocument = sendPostRequest("exists/email", postData);
 
-    bool emailExists = false; // 默认邮箱不存在
-    if (reply->isFinished() && reply->error() == QNetworkReply::NoError)
-    {
-        // 读取响应数据
-        QByteArray responseData = reply->readAll();
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
-        emailExists = jsonDocument.object()["exist"].toBool();
-    }
-    else
-    {
-        qDebug() << "Error: " << reply->errorString();
-    }
-    reply->deleteLater();
-    return emailExists;
+    // 读取响应数据
+    return jsonDocument.object()["exist"].toBool();
 }
 
 // 用户名是否合法
-bool UserInfoManager::isUsernameValid(QString username)
+bool UserGroupManager::isUsernameValid(QString username)
 {
     // 使用正则表达式匹配用户名格式
     static const QRegularExpression usernameRegex(R"(^[a-zA-Z0-9一-龥_]{1,20}$)"); // 由 1 到 20 个汉字、字母、数字或下划线组成
@@ -269,7 +226,7 @@ bool UserInfoManager::isUsernameValid(QString username)
 }
 
 // 邮箱是否合法
-bool UserInfoManager::isEmailValid(QString email)
+bool UserGroupManager::isEmailValid(QString email)
 {
     // 使用正则表达式匹配邮箱格式
     static const QRegularExpression emailRegex(R"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)");
@@ -278,7 +235,7 @@ bool UserInfoManager::isEmailValid(QString email)
 }
 
 // 密码是否合法
-bool UserInfoManager::isPasswordValid(QString password)
+bool UserGroupManager::isPasswordValid(QString password)
 {
     if (password.size() < 6 || password.size() > 20)
         return false;
@@ -301,7 +258,7 @@ bool UserInfoManager::isPasswordValid(QString password)
 }
 
 // 加密密码
-QString UserInfoManager::encryptPassword(QString password)
+QString UserGroupManager::encryptPassword(QString password)
 {
     QByteArray byteArray = password.toUtf8();
     // SHA-256加密
@@ -313,17 +270,17 @@ QString UserInfoManager::encryptPassword(QString password)
 }
 
 // 修改用户名
-bool UserInfoManager::changeUsername(int UID, QString newUsername)
+bool UserGroupManager::changeUsername(int UID, QString newUsername)
 {
 }
 
 // 修改邮箱
-bool UserInfoManager::changeEmail(int UID, QString newEmail)
+bool UserGroupManager::changeEmail(int UID, QString newEmail)
 {
 }
 
 // 修改密码
-bool UserInfoManager::changePassword(QString email, QString newPassword)
+bool UserGroupManager::changePassword(QString email, QString newPassword)
 {
     // 构造参数
     QUrlQuery postData;
@@ -343,7 +300,7 @@ bool UserInfoManager::changePassword(QString email, QString newPassword)
 }
 
 // 获取用户信息
-User UserInfoManager::getUser(int UID)
+User UserGroupManager::getUser(int UID)
 {
     // 构造参数
     QUrlQuery postData;
@@ -360,7 +317,7 @@ User UserInfoManager::getUser(int UID)
 }
 
 // 获取用户信息
-User UserInfoManager::getUser(QString email)
+User UserGroupManager::getUser(QString email)
 {
     // 构造参数
     QUrlQuery postData;
@@ -377,7 +334,7 @@ User UserInfoManager::getUser(QString email)
 }
 
 // 获取用户的好友列表
-QVector<User> UserInfoManager::getContactList(int Uid)
+QVector<User> UserGroupManager::getContactList(int Uid)
 {
     QVector<User> list;
     // 构造参数
@@ -396,7 +353,7 @@ QVector<User> UserInfoManager::getContactList(int Uid)
 }
 
 // 获取用户所有群
-QVector<Group> UserInfoManager::getGroupList(int Uid)
+QVector<Group> UserGroupManager::getGroupList(int Uid)
 {
     QVector<Group> list;
     // 构造参数
@@ -415,9 +372,8 @@ QVector<Group> UserInfoManager::getGroupList(int Uid)
 }
 
 // 根据群id获取用户
-QVector<User> UserInfoManager::getGroupMembers(int Gid)
+QVector<User> UserGroupManager::getGroupMembers(int Gid)
 {
-    qDebug() << "______________";
     QVector<User> list;
     // 构造参数
     QUrlQuery postData;
@@ -435,7 +391,7 @@ QVector<User> UserInfoManager::getGroupMembers(int Gid)
 }
 
 // 根据群id获取群
-Group UserInfoManager::getGroupByGid(int Gid)
+Group UserGroupManager::getGroupByGid(int Gid)
 {
     Group group;
     // 构造参数
