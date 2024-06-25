@@ -12,12 +12,14 @@ SOURCES += \
     entity/group.cpp \
     entity/user.cpp \
     main.cpp \
-    formmanager.cpp
+    formmanager.cpp \
+    manager/usergroupmanager.cpp
 
 HEADERS += \
     entity/group.h \
     entity/user.h \
-    formmanager.h
+    formmanager.h \
+    manager/usergroupmanager.h
 
 FORMS += \
     formmanager.ui
