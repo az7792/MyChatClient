@@ -25,7 +25,7 @@ public:
     QString newMessage;
     QString name;//聊天对象的昵称，用户名 or 群名
     QString chatType;//"user" or "group"
-    QPixmap avatar;
+    QPixmap avatar;//聊天对象的头像
     int id;//聊天对象的id，uid or groupid
     int uid;
 

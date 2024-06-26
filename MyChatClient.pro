@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chat/chatform.cpp \
     chat/chatwebsocket.cpp \
     entity/group.cpp \
     entity/message.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
     window/userauthwindow.cpp
 
 HEADERS += \
+    chat/chatform.h \
     chat/chatwebsocket.h \
     entity/group.h \
     entity/message.h \
@@ -40,6 +42,7 @@ HEADERS += \
     window/userauthwindow.h
 
 FORMS += \
+    chat/chatform.ui \
     formmanager.ui \
     smallWidget/loginform.ui \
     smallWidget/messagebox.ui \

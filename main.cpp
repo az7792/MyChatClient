@@ -10,6 +10,8 @@
 #include <smallWidget/recvbox.h>
 #include <smallWidget/sendbox.h>
 #include <smallWidget/messagebox.h>
+#include <chat/chatform.h>
+#include <chat/chatwebsocket.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -35,7 +37,7 @@ int main(int argc, char *argv[])
     //RegisterForm w;
     //ResetPasswordForm w;
     //UserAuthWindow w;
-
+    ChatWebSocket &websocket = ChatWebSocket::getInstance();
     QScrollArea *scrollArea = new QScrollArea;
     QWidget *contentWidget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
@@ -62,12 +64,17 @@ int main(int argc, char *argv[])
     //
     MessageBox *w = new MessageBox();
     MessageBox *ww = new MessageBox();
-    w->setAvatar(QPixmap(":/img/resources/img/logo.png"));
-    w->setNewMessage("ahaha34343434343");
-    w->setName("4353444444444444444");
-    w->setNumUnread(3);
-    w->setTime(QDateTime::currentDateTime());
-    w->setBackgroundColor(Qt::red);
+    w->setId(20);
+    w->uid=1;
+    websocket.connectToServer(QUrl("ws://localhost:8080/chat/1"));
+    w->setChatType("group");
+    w->setName("wangyi");
+    // w->setAvatar(QPixmap(":/img/resources/img/logo.png"));
+    // w->setNewMessage("ahaha34343434343");
+    // w->setName("4353444444444444444");
+    // w->setNumUnread(3);
+    // w->setTime(QDateTime::currentDateTime());
+    // w->setBackgroundColor(Qt::red);
     layout->addWidget(w);
     layout->addWidget(ww);
 
@@ -80,5 +87,10 @@ int main(int argc, char *argv[])
 
     // 显示 QScrollArea
     scrollArea->show();
+
+    ChatForm *chatForm = new ChatForm();
+    QObject::connect(w,&MessageBox::clicked,chatForm,&ChatForm::onMessageBoxPass);
+    chatForm->show();
+
     return a.exec();
 }
