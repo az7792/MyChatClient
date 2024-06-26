@@ -104,7 +104,6 @@ bool UserGroupManager::registerUser(QString username, QString email, QString pas
     if (isEmailExist(email) == true)
         return false;
     password = encryptPassword(password);
-
     // pixmap转base64
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
