@@ -12,6 +12,8 @@
 #include <smallWidget/messagebox.h>
 #include <chat/chatform.h>
 #include <chat/chatwebsocket.h>
+#include<smallWidget/boxlist.h>
+#include<smallWidget/sidebar.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -38,9 +40,9 @@ int main(int argc, char *argv[])
     //ResetPasswordForm w;
     //UserAuthWindow w;
     ChatWebSocket &websocket = ChatWebSocket::getInstance();
-    QScrollArea *scrollArea = new QScrollArea;
-    QWidget *contentWidget = new QWidget;
-    QVBoxLayout *layout = new QVBoxLayout;
+    // QScrollArea *scrollArea = new QScrollArea;
+    // QWidget *contentWidget = new QWidget;
+    // QVBoxLayout *layout = new QVBoxLayout;
     /*
      * 结构：
      *   QScrollArea
@@ -62,8 +64,23 @@ int main(int argc, char *argv[])
     // ww->setText("aushuaihioaioaios阿松符号是佛啊爱哦手癌哈佛奥i哈佛i安徽佛啊hi发爱上哈佛i啊hi哦好i和");
 
     //
+    Sidebar *www = new Sidebar();
+    www->show();
+    QWidget * widget = new QWidget();
+    QHBoxLayout *layout = new QHBoxLayout();
+    widget->setLayout(layout);
+
+    BoxList *boxlist = new BoxList();
+    boxlist->show();
     MessageBox *w = new MessageBox();
     MessageBox *ww = new MessageBox();
+    layout->addWidget(w);
+    layout->addWidget(www);
+    layout->addWidget(ww);
+
+    widget->show();
+    //boxlist->addWidget(w);
+    //boxlist->addWidget(ww);
     w->setId(20);
     w->uid=1;
     websocket.connectToServer(QUrl("ws://localhost:8080/chat/1"));
@@ -75,18 +92,18 @@ int main(int argc, char *argv[])
     // w->setNumUnread(3);
     // w->setTime(QDateTime::currentDateTime());
     // w->setBackgroundColor(Qt::red);
-    layout->addWidget(w);
-    layout->addWidget(ww);
+    // layout->addWidget(w);
+    // layout->addWidget(ww);
 
-    // 设置布局到内容窗口
-    contentWidget->setLayout(layout);
+    // // 设置布局到内容窗口
+    // contentWidget->setLayout(layout);
 
-    // 将内容窗口设置为 QScrollArea 的内容
-    scrollArea->setWidget(contentWidget);
-    scrollArea->setWidgetResizable(true); // 确保内容窗口可以调整大小以适应 QScrollArea
+    // // 将内容窗口设置为 QScrollArea 的内容
+    // scrollArea->setWidget(contentWidget);
+    // scrollArea->setWidgetResizable(true); // 确保内容窗口可以调整大小以适应 QScrollArea
 
-    // 显示 QScrollArea
-    scrollArea->show();
+    // // 显示 QScrollArea
+    // scrollArea->show();
 
     ChatForm *chatForm = new ChatForm();
     QObject::connect(w,&MessageBox::clicked,chatForm,&ChatForm::onMessageBoxPass);

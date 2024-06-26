@@ -17,12 +17,14 @@ SOURCES += \
     main.cpp \
     formmanager.cpp \
     manager/usergroupmanager.cpp \
+    smallWidget/boxlist.cpp \
     smallWidget/loginform.cpp \
     smallWidget/messagebox.cpp \
     smallWidget/recvbox.cpp \
     smallWidget/registerform.cpp \
     smallWidget/resetpasswordform.cpp \
     smallWidget/sendbox.cpp \
+    smallWidget/sidebar.cpp \
     window/userauthwindow.cpp
 
 HEADERS += \
@@ -33,12 +35,14 @@ HEADERS += \
     entity/user.h \
     formmanager.h \
     manager/usergroupmanager.h \
+    smallWidget/boxlist.h \
     smallWidget/loginform.h \
     smallWidget/messagebox.h \
     smallWidget/recvbox.h \
     smallWidget/registerform.h \
     smallWidget/resetpasswordform.h \
     smallWidget/sendbox.h \
+    smallWidget/sidebar.h \
     window/userauthwindow.h
 
 FORMS += \
@@ -49,7 +53,8 @@ FORMS += \
     smallWidget/recvbox.ui \
     smallWidget/registerform.ui \
     smallWidget/resetpasswordform.ui \
-    smallWidget/sendbox.ui
+    smallWidget/sendbox.ui \
+    smallWidget/sidebar.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
