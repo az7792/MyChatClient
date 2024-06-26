@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>406</width>
-    <height>516</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,7 +69,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../resources.qrc">:/img/resources/img/defaultAvatar.jpg</pixmap>
+         <pixmap>:/img/resources/img/defaultAvatar.jpg</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -283,10 +283,21 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

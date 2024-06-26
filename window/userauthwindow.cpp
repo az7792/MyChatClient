@@ -40,4 +40,5 @@ void UserAuthWindow::showRegisterForm() {
 
 void UserAuthWindow::showResetPasswordForm() {
     stackedWidget->setCurrentWidget(resetPasswordForm);
+    resetPasswordForm->initForm();
 }
