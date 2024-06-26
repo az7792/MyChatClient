@@ -9,6 +9,7 @@
 #include <window/userauthwindow.h>
 #include <smallWidget/recvbox.h>
 #include <smallWidget/sendbox.h>
+#include <smallWidget/messagebox.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -38,18 +39,35 @@ int main(int argc, char *argv[])
     QScrollArea *scrollArea = new QScrollArea;
     QWidget *contentWidget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
+    /*
+     * 结构：
+     *   QScrollArea
+     *   └── QWidget
+     *       └── QVBoxLayout
+     *           ├── RecvBox
+     *           └── SendBox
+     */
 
-    RecvBox *w = new RecvBox;
-    w->setAvatar(QPixmap(":/img/resources/img/defaultAvatar.jpg"));
-    w->setText("你好");
-    w->setTextColor(Qt::red);
-    w->setBackgroundColor(Qt::blue);
-    w->setBordetRadius(10);
+    // RecvBox *w = new RecvBox;
+    // w->setAvatar(QPixmap(":/img/resources/img/defaultAvatar.jpg"));
+    // w->setText("你好");
+    // w->setTextColor(Qt::red);
+    // w->setBackgroundColor(Qt::blue);
+    // w->setBordetRadius(10);
 
-    SendBox *ww = new SendBox;
-    ww->setAvatar(QPixmap(":/img/resources/img/logo.png"));
-    ww->setText("aushuaihioaioaios阿松符号是佛啊爱哦手癌哈佛奥i哈佛i安徽佛啊hi发爱上哈佛i啊hi哦好i和");
+    // SendBox *ww = new SendBox;
+    // ww->setAvatar(QPixmap(":/img/resources/img/logo.png"));
+    // ww->setText("aushuaihioaioaios阿松符号是佛啊爱哦手癌哈佛奥i哈佛i安徽佛啊hi发爱上哈佛i啊hi哦好i和");
 
+    //
+    MessageBox *w = new MessageBox();
+    MessageBox *ww = new MessageBox();
+    w->setAvatar(QPixmap(":/img/resources/img/logo.png"));
+    w->setNewMessage("ahaha34343434343");
+    w->setName("4353444444444444444");
+    w->setNumUnread(3);
+    w->setTime(QDateTime::currentDateTime());
+    w->setBackgroundColor(Qt::red);
     layout->addWidget(w);
     layout->addWidget(ww);
 
@@ -62,6 +80,5 @@ int main(int argc, char *argv[])
 
     // 显示 QScrollArea
     scrollArea->show();
-
     return a.exec();
 }

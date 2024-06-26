@@ -9,12 +9,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chat/chatwebsocket.cpp \
     entity/group.cpp \
+    entity/message.cpp \
     entity/user.cpp \
     main.cpp \
     formmanager.cpp \
     manager/usergroupmanager.cpp \
     smallWidget/loginform.cpp \
+    smallWidget/messagebox.cpp \
     smallWidget/recvbox.cpp \
     smallWidget/registerform.cpp \
     smallWidget/resetpasswordform.cpp \
@@ -22,11 +25,14 @@ SOURCES += \
     window/userauthwindow.cpp
 
 HEADERS += \
+    chat/chatwebsocket.h \
     entity/group.h \
+    entity/message.h \
     entity/user.h \
     formmanager.h \
     manager/usergroupmanager.h \
     smallWidget/loginform.h \
+    smallWidget/messagebox.h \
     smallWidget/recvbox.h \
     smallWidget/registerform.h \
     smallWidget/resetpasswordform.h \
@@ -36,6 +42,7 @@ HEADERS += \
 FORMS += \
     formmanager.ui \
     smallWidget/loginform.ui \
+    smallWidget/messagebox.ui \
     smallWidget/recvbox.ui \
     smallWidget/registerform.ui \
     smallWidget/resetpasswordform.ui \
