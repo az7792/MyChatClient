@@ -1,11 +1,14 @@
 #include "formmanager.h"
 #include "manager/usergroupmanager.h"
 #include <QApplication>
+#include <QScrollArea>
 #include <cassert>
 #include <smallWidget/loginform.h>
 #include <smallWidget/registerform.h>
 #include <smallWidget/resetpasswordform.h>
 #include <window/userauthwindow.h>
+#include <smallWidget/recvbox.h>
+#include <smallWidget/sendbox.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -30,8 +33,35 @@ int main(int argc, char *argv[])
     //LoginForm w;
     //RegisterForm w;
     //ResetPasswordForm w;
-    UserAuthWindow w;
-    w.show();
+    //UserAuthWindow w;
+
+    QScrollArea *scrollArea = new QScrollArea;
+    QWidget *contentWidget = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout;
+
+    RecvBox *w = new RecvBox;
+    w->setAvatar(QPixmap(":/img/resources/img/defaultAvatar.jpg"));
+    w->setText("你好");
+    w->setTextColor(Qt::red);
+    w->setBackgroundColor(Qt::blue);
+    w->setBordetRadius(10);
+
+    SendBox *ww = new SendBox;
+    ww->setAvatar(QPixmap(":/img/resources/img/logo.png"));
+    ww->setText("aushuaihioaioaios阿松符号是佛啊爱哦手癌哈佛奥i哈佛i安徽佛啊hi发爱上哈佛i啊hi哦好i和");
+
+    layout->addWidget(w);
+    layout->addWidget(ww);
+
+    // 设置布局到内容窗口
+    contentWidget->setLayout(layout);
+
+    // 将内容窗口设置为 QScrollArea 的内容
+    scrollArea->setWidget(contentWidget);
+    scrollArea->setWidgetResizable(true); // 确保内容窗口可以调整大小以适应 QScrollArea
+
+    // 显示 QScrollArea
+    scrollArea->show();
 
     return a.exec();
 }
