@@ -20,7 +20,7 @@ signals:
     void onMessagesClicked();
     void onFriendsClicked();
     void onGroupsClicked();
-    void onSettingClicked();
+    void onSettingClicked(QPoint pos);
     void onUserAvatarClicked();
     void onAddClicked(); // 新增信号声明
 

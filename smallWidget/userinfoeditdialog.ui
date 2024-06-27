@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RegisterForm</class>
- <widget class="QWidget" name="RegisterForm">
+ <class>UserInfoEditDialog</class>
+ <widget class="QWidget" name="UserInfoEditDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>523</height>
+    <width>400</width>
+    <height>463</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,9 +67,6 @@
         </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../resources.qrc">:/img/resources/img/defaultAvatar.jpg</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -267,16 +264,9 @@
     <widget class="QWidget" name="widget_2" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="returnPushButton">
+       <widget class="QPushButton" name="editPushButton">
         <property name="text">
-         <string>返回</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="registerPushButton">
-        <property name="text">
-         <string>注册</string>
+         <string>确认修改</string>
         </property>
        </widget>
       </item>
@@ -291,15 +281,13 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>9</height>
       </size>
      </property>
     </spacer>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

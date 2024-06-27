@@ -5,15 +5,17 @@
 #include "boxList/messageboxlist.h"
 #include "smallWidget/sidebar.h"
 #include "chat/chatform.h"
+#include "smallWidget/userinfoeditdialog.h"
 #include <QStackedWidget>
 #include "smallWidget/addform.h"
+#include <QMenu>
 
-class MainWidow : public QWidget
+class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWidow(QWidget *parent = nullptr);
-    ~MainWidow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
     void setUser(User user);
 
 private:
@@ -32,8 +34,10 @@ private slots:
     void showFriends();
     void showGroups();
     void showAddForm(); // 新增槽函数声明
+    void showSetting(QPoint pos);
 
 signals:
+    void logout();
 };
 
 #endif // MAINWIDOW_H

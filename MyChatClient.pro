@@ -26,6 +26,7 @@ SOURCES += \
     smallWidget/resetpasswordform.cpp \
     smallWidget/sendbox.cpp \
     smallWidget/sidebar.cpp \
+    smallWidget/userinfoeditdialog.cpp \
     window/mainwidow.cpp \
     window/userauthwindow.cpp
 
@@ -47,6 +48,7 @@ HEADERS += \
     smallWidget/resetpasswordform.h \
     smallWidget/sendbox.h \
     smallWidget/sidebar.h \
+    smallWidget/userinfoeditdialog.h \
     window/mainwidow.h \
     window/userauthwindow.h
 
@@ -58,7 +60,8 @@ FORMS += \
     smallWidget/registerform.ui \
     smallWidget/resetpasswordform.ui \
     smallWidget/sendbox.ui \
-    smallWidget/sidebar.ui
+    smallWidget/sidebar.ui \
+    smallWidget/userinfoeditdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
