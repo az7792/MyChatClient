@@ -131,6 +131,43 @@ bool UserGroupManager::registerUser(QString username, QString email, QString pas
     return success;
 }
 
+//更新用户信息
+bool UserGroupManager::updateUserInfo(int UID, QString username, QString email, QPixmap pixmap)
+{
+    // 验证数据格式
+    if (isUsernameValid(username) == false)
+        return false;
+    if (isEmailValid(email) == false)
+        return false;
+
+    // pixmap转base64
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    pixmap.save(&buffer, "JPG"); // 保存为 JPG 格式
+    buffer.close();
+    QString base64String = byteArray.toBase64();
+    base64String = QUrl::toPercentEncoding(base64String);
+    // 注册请求
+    //  构造参数
+    QUrlQuery postData;
+    postData.addQueryItem("uid", QString::number(UID));
+    postData.addQueryItem("username", username);
+    postData.addQueryItem("email", email);
+    postData.addQueryItem("avatar", base64String);
+
+    QJsonDocument jsonDocument = sendPostRequest("updateUserInfo", postData);
+
+    // 解析响应
+    bool success = false;
+    if (!jsonDocument.isEmpty())
+    {
+        success = jsonDocument.object()["success"].toBool();
+    }
+    return success;
+}
+
+
 // 匹配验证码
 bool UserGroupManager::matchCaptcha(QString email, QString code)
 {

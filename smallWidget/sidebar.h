@@ -19,7 +19,7 @@ signals:
     void onMessagesClicked();
     void onFriendsClicked();
     void onGroupsClicked();
-    void onSettingClicked();
+    void onSettingClicked(QPoint pos);
     void onUserAvatarClicked();
 
 private slots:

@@ -5,14 +5,16 @@
 #include "boxList/messageboxlist.h"
 #include "smallWidget/sidebar.h"
 #include "chat/chatform.h"
+#include "smallWidget/userinfoeditdialog.h"
 #include <QStackedWidget>
+#include <QMenu>
 
-class MainWidow : public QWidget
+class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWidow(QWidget *parent = nullptr);
-    ~MainWidow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
     void setUser(User user);
 
 private:
@@ -28,8 +30,10 @@ private slots:
     void showMessages();
     void showFriends();
     void showGroups();
+    void showSetting(QPoint pos);
 
 signals:
+    void logout();
 };
 
 #endif // MAINWIDOW_H

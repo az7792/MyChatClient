@@ -17,7 +17,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWidow mw;
+    MainWindow mw;
     mw.show();
     mw.setUser(UserGroupManager::getUser(1));
     return a.exec();

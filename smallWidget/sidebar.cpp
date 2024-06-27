@@ -38,7 +38,7 @@ void Sidebar::on_groups_clicked()
 
 void Sidebar::on_setting_clicked()
 {
-    emit onSettingClicked();
+    emit onSettingClicked(ui->setting->mapToGlobal(ui->setting->rect().bottomRight()));
 }
 
 
