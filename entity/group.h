@@ -10,7 +10,7 @@ class Group
 {
 public:
     Group();
-    Group(int groupid,QString groupname,int ownerid);
+    Group(int groupid,QString groupname,int ownerid,QPixmap Avatar);
 
     int getGroupid();
     int getOwnerid();
@@ -28,7 +28,7 @@ private:
     int groupid=-1;
     int ownerid = -1;
     QString groupname;
-    QPixmap Avatar();
+    QPixmap Avatar;
 };
 
 #endif // GROUP_H

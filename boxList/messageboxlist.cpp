@@ -76,8 +76,7 @@ void MessageBoxList::updataMessageBox(Message message)
                 //新建一个
                 MessageBox *newMessageBox = new MessageBox(this);
                 Group tmpGroup = UserGroupManager::getGroupByGid(message.toReceiver);
-                //Avatar...(需要群头像)
-                //newMessageBox->setAvatar(tmpGroup.getAvatar());
+                newMessageBox->setAvatar(tmpGroup.getAvatar());
                 newMessageBox->setName(tmpGroup.getGroupname());
                 newMessageBox->setNumUnread(0);
                 newMessageBox->id = message.toReceiver;

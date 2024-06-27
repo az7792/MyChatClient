@@ -41,7 +41,14 @@ Group Group::toGroup(QJsonObject jsonObject)
 {
     if(jsonObject.isEmpty())
         return Group();
-    Group group(jsonObject["groupid"].toInt(),jsonObject["groupname"].toString(),jsonObject["ownerid"].toInt(),jsonObject["avatar"].toString());
+    QString avatarString = jsonObject["avatar"].toString();
+    // 将Base64字符串转换为QPixmap
+    QByteArray byteArray = QByteArray::fromBase64(avatarString.toUtf8());
+    QPixmap avatar;
+    if (!byteArray.isEmpty()) {
+        avatar.loadFromData(byteArray);
+    }
+    Group group(jsonObject["groupid"].toInt(),jsonObject["groupname"].toString(),jsonObject["ownerid"].toInt(),avatar);
     return group;
 }
 QPixmap Group::getAvatar()
