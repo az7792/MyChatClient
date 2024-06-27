@@ -23,27 +23,27 @@ void Sidebar::on_messages_clicked()
     emit onMessagesClicked();
 }
 
-
 void Sidebar::on_friends_clicked()
 {
     emit onFriendsClicked();
 }
-
 
 void Sidebar::on_groups_clicked()
 {
     emit onGroupsClicked();
 }
 
-
 void Sidebar::on_setting_clicked()
 {
     emit onSettingClicked();
 }
-
 
 void Sidebar::on_userAvatar_clicked()
 {
     emit onUserAvatarClicked();
 }
 
+void Sidebar::on_add_clicked()
+{
+    emit onAddClicked(); // 发射新增的信号
+}

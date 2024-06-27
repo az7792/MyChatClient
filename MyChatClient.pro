@@ -18,6 +18,7 @@ SOURCES += \
     entity/user.cpp \
     main.cpp \
     manager/usergroupmanager.cpp \
+    smallWidget/addform.cpp \
     smallWidget/loginform.cpp \
     smallWidget/messagebox.cpp \
     smallWidget/recvbox.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     entity/message.h \
     entity/user.h \
     manager/usergroupmanager.h \
+    smallWidget/addform.h \
     smallWidget/boxlist.h \
     smallWidget/loginform.h \
     smallWidget/messagebox.h \

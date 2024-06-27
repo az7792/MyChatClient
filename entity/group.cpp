@@ -55,5 +55,5 @@ Group Group::toGroup(QJsonObject jsonObject)
 }
 QPixmap Group::getAvatar()
 {
-    return QPixmap(":/img/resources/defaultAvatar.jpg");
+    return QPixmap(":/img/resources/img/defaultAvatar.jpg");
 }

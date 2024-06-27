@@ -6,6 +6,7 @@
 #include "smallWidget/sidebar.h"
 #include "chat/chatform.h"
 #include <QStackedWidget>
+#include "smallWidget/addform.h"
 
 class MainWidow : public QWidget
 {
@@ -19,15 +20,18 @@ private:
     User user;
     ChatWebSocket &websocket = ChatWebSocket::getInstance();
 
-    Sidebar *sidebar;//侧边栏
+    Sidebar *sidebar;
     QStackedWidget *stackedWidget;
-    ChatForm *chatForm;//聊天窗口
+    ChatForm *chatForm;
+    AddForm *addForm;
 
-    MessageBoxList *messageBoxList;//消息控件列表 0
+    MessageBoxList *messageBoxList;
+
 private slots:
     void showMessages();
     void showFriends();
     void showGroups();
+    void showAddForm(); // 新增槽函数声明
 
 signals:
 };
