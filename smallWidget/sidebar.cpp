@@ -13,6 +13,11 @@ Sidebar::~Sidebar()
     delete ui;
 }
 
+void Sidebar::setAvatar(QPixmap Avatar)
+{
+    ui->userAvatar->setIcon(QIcon(Avatar));
+}
+
 void Sidebar::on_messages_clicked()
 {
     emit onMessagesClicked();
@@ -40,6 +45,5 @@ void Sidebar::on_setting_clicked()
 void Sidebar::on_userAvatar_clicked()
 {
     emit onUserAvatarClicked();
-    qDebug()<<1;
 }
 

@@ -1,6 +1,7 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
+#include <QVBoxLayout>
 #include <QWidget>
 #include "entity/user.h"
 #include "entity/message.h"
@@ -11,6 +12,7 @@
 #include<QScrollBar>
 #include <QMap>
 #include <manager/usergroupmanager.h>
+#include <boxList/boxlist.h>
 namespace Ui {
 class ChatForm;
 }
@@ -27,8 +29,6 @@ public:
     int toId=-1;//接受者id
     QString chatType;//聊天类型
     User sendUser;
-    QMap<int,User> recvUsers;//key(uid),value(User)
-
     void initRecvUsers(int id,QString chatType);//初始化接收用户列表
 signals:
     void saveToMessageBox(Message message);
@@ -42,6 +42,9 @@ private:
     Ui::ChatForm *ui;
     void addSendBox(QString text);
     void addRecvBox(QString text,QPixmap Avatar);
+    QMap<QPair<int,QString>,BoxList *>messageBoxMap;
+    QMap<int,User> recvUsers;//key(uid),value(User)
+    BoxList *nowBoxList;
 };
 
 #endif // CHATFORM_H

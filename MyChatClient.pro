@@ -9,15 +9,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    boxList/boxlist.cpp \
+    boxList/messageboxlist.cpp \
     chat/chatform.cpp \
     chat/chatwebsocket.cpp \
     entity/group.cpp \
     entity/message.cpp \
     entity/user.cpp \
     main.cpp \
-    formmanager.cpp \
     manager/usergroupmanager.cpp \
-    smallWidget/boxlist.cpp \
     smallWidget/loginform.cpp \
     smallWidget/messagebox.cpp \
     smallWidget/recvbox.cpp \
@@ -25,15 +25,17 @@ SOURCES += \
     smallWidget/resetpasswordform.cpp \
     smallWidget/sendbox.cpp \
     smallWidget/sidebar.cpp \
+    window/mainwidow.cpp \
     window/userauthwindow.cpp
 
 HEADERS += \
+    boxList/boxlist.h \
+    boxList/messageboxlist.h \
     chat/chatform.h \
     chat/chatwebsocket.h \
     entity/group.h \
     entity/message.h \
     entity/user.h \
-    formmanager.h \
     manager/usergroupmanager.h \
     smallWidget/boxlist.h \
     smallWidget/loginform.h \
@@ -43,11 +45,11 @@ HEADERS += \
     smallWidget/resetpasswordform.h \
     smallWidget/sendbox.h \
     smallWidget/sidebar.h \
+    window/mainwidow.h \
     window/userauthwindow.h
 
 FORMS += \
     chat/chatform.ui \
-    formmanager.ui \
     smallWidget/loginform.ui \
     smallWidget/messagebox.ui \
     smallWidget/recvbox.ui \
@@ -63,4 +65,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc \
-    smallWidget/resources.qrc

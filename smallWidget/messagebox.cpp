@@ -82,8 +82,8 @@ void MessageBox::setNewMessage(const QString &newMessage)
 {
     this->newMessage = newMessage;
     QString tmpNewMessage;
-    if (newMessage.size() > 15)
-        tmpNewMessage = newMessage.left(15) + "...";
+    if (newMessage.size() > 10)
+        tmpNewMessage = newMessage.left(10) + "...";
     else
         tmpNewMessage = newMessage;
     ui->messageLabel->setText(tmpNewMessage);

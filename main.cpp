@@ -1,4 +1,3 @@
-#include "formmanager.h"
 #include "manager/usergroupmanager.h"
 #include <QApplication>
 #include <QScrollArea>
@@ -12,11 +11,16 @@
 #include <smallWidget/messagebox.h>
 #include <chat/chatform.h>
 #include <chat/chatwebsocket.h>
-#include<smallWidget/boxlist.h>
+#include<boxList/boxlist.h>
 #include<smallWidget/sidebar.h>
+#include<window/mainwidow.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    MainWidow mw;
+    mw.show();
+    mw.setUser(UserGroupManager::getUser(1));
+    return a.exec();
     /*/------------测试------------------
     //测试邮箱是否存在
     assert(UserGroupManager::isEmailExist("1460014874@qq.com")==true);

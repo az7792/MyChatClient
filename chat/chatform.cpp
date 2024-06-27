@@ -8,7 +8,13 @@ ChatForm::ChatForm(QWidget *parent)
     , ui(new Ui::ChatForm)
 {
     ui->setupUi(this);
-    ui->scrollAreaWidgetContents->layout()->setSpacing(25);//设置控件间距25像素
+    //删除ui中自带的前两个页面
+    for (int i = 0; i < ui->stackedWidget->count(); ++i)
+    {
+        QWidget *widget = ui->stackedWidget->widget(0);
+        ui->stackedWidget->removeWidget(widget);
+        delete widget;
+    }
     connect(&chatWebsocket,&ChatWebSocket::textMessageReceived,this,&ChatForm::onTextMessageReceived);//websocket收到消息转到槽函数处理
 }
 
@@ -19,15 +25,7 @@ ChatForm::~ChatForm()
 
 void ChatForm::initRecvUsers(int toId, QString chatType)
 {
-    //清除之前的消息
-    while(ui->scrollAreaWidgetContents->layout()->count()>0)
-    {
-        QLayoutItem *item = ui->scrollAreaWidgetContents->layout()->takeAt(0);
-        delete item->widget();
-        delete item;
-    }
-
-    //加载消息
+    //加载成员
     this->chatType = chatType;
     this->toId=toId;
     recvUsers.clear();
@@ -48,7 +46,7 @@ void ChatForm::initRecvUsers(int toId, QString chatType)
 
 void ChatForm::on_SendPushButton_clicked()//发送
 {
-    if(ui->plainTextEdit->toPlainText()=="" || toId==-1)//消息为空或者无接受者
+    if(ui->plainTextEdit->toPlainText()=="" || toId==-1 || sendUser.getUID() == -1)//消息为空或者无接受者
         return;
     QString text = ui->plainTextEdit->toPlainText();
     Message message(sendUser.getUID(),toId,chatType,text,"text");
@@ -82,7 +80,7 @@ void ChatForm::onTextMessageReceived(const QString &messageString)
         emit saveToMessageBox(message);
         return;
     }
-    //是当前窗口对于的聊天对象
+    //是当前窗口对应的聊天对象
     addRecvBox(message.text,recvUsers[message.fromUserUid].getAvatar());
     message.isRead = 1;
     emit saveToMessageBox(message);
@@ -91,36 +89,36 @@ void ChatForm::onTextMessageReceived(const QString &messageString)
 //新增发送框
 void ChatForm::addSendBox(QString text)
 {
-    SendBox *sendBox = new SendBox(ui->scrollArea);
+    SendBox *sendBox = new SendBox(nowBoxList);
     sendBox->setBackgroundColor(QColor(0,153,255));
     sendBox->setBordetRadius(10);
     sendBox->setTextColor(Qt::white);
     sendBox->setText(text);
     sendBox->setAvatar(sendUser.getAvatar());
-    ui->scrollAreaWidgetContents->layout()->addWidget(sendBox);
+    nowBoxList->addWidget(sendBox);
     QTimer::singleShot(100, this, [this]() {//100ms后将垂直滚动条滑到最下面
-        ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum());
+        nowBoxList->scrollToBottom();
     });
 }
 //新增接收框
 void ChatForm::addRecvBox(QString text, QPixmap Avatar)
 {
-    RecvBox *recvBox = new RecvBox(ui->scrollArea);
+    RecvBox *recvBox = new RecvBox(nowBoxList);
     recvBox->setBackgroundColor(QColor(255,255,255));
     recvBox->setBordetRadius(10);
     recvBox->setTextColor(Qt::black);
     recvBox->setText(text);
     recvBox->setAvatar(Avatar);
-    ui->scrollAreaWidgetContents->layout()->addWidget(recvBox);
-    QTimer::singleShot(100, this, [this]() {
-        ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum());
+    nowBoxList->addWidget(recvBox);
+    QTimer::singleShot(100, this, [this]() {//100ms后将垂直滚动条滑到最下面
+        nowBoxList->scrollToBottom();
     });
 }
 
 void ChatForm::onMessageBoxPass(MessageBox *messageBox)
 {
     //加载用户
-    if(sendUser.getUID()!=messageBox->uid)
+    if(sendUser.getUID()==-1 || sendUser.getUID()!=messageBox->uid)
         sendUser = UserGroupManager::getUser(messageBox->uid);
     toId = messageBox->id,chatType = messageBox->chatType;
 
@@ -129,7 +127,20 @@ void ChatForm::onMessageBoxPass(MessageBox *messageBox)
     ui->nameLabel->setText(messageBox->name);
 
     //加载消息
-    for(auto v:messageBox->messages){
+    if(messageBoxMap.find(qMakePair(toId,chatType)) == messageBoxMap.end())
+    {
+        //新建nowBoxList
+        nowBoxList = new BoxList(this);
+        messageBoxMap.insert(qMakePair(toId,chatType),nowBoxList);
+        ui->stackedWidget->addWidget(nowBoxList);
+    }
+    nowBoxList = messageBoxMap[qMakePair(messageBox->id,messageBox->chatType)];
+    ui->stackedWidget->setCurrentWidget(nowBoxList);
+
+    //载入未加载到BoxList里的消息
+    int messagesSize = messageBox->messages.size();
+    for(int i=messageBox->numUnread;i>=1 && messagesSize-i >= 0;--i){
+        Message v = messageBox->messages[messagesSize-i];
         if(v.fromUserUid == sendUser.getUID())
         {
             addSendBox(v.text);

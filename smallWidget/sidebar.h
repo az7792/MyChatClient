@@ -14,6 +14,7 @@ class Sidebar : public QWidget
 public:
     explicit Sidebar(QWidget *parent = nullptr);
     ~Sidebar();
+    void setAvatar(QPixmap Avatar);
 signals:
     void onMessagesClicked();
     void onFriendsClicked();

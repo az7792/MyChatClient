@@ -1,7 +1,7 @@
 #include "boxlist.h"
 
 #include <QPushButton>
-
+#include <QScrollBar>
 BoxList::BoxList(QWidget *parent)
     : QWidget{parent}
 {
@@ -19,7 +19,6 @@ BoxList::BoxList(QWidget *parent)
     scrollArea = new QScrollArea(this);
     contentWidget = new QWidget(scrollArea);
     layout = new QVBoxLayout(contentWidget);
-
     this->setLayout(mainLayout);
     mainLayout->addWidget(scrollArea);
     scrollArea->setWidget(contentWidget);
@@ -46,4 +45,9 @@ void BoxList::deleteWidget(QWidget *widget)
         layout->removeWidget(widget);
         delete widget;
     }
+}
+
+void BoxList::scrollToBottom()
+{
+    scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->maximum());
 }

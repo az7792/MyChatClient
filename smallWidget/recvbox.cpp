@@ -10,6 +10,7 @@ RecvBox::RecvBox(QWidget *parent) :
     ui->messageLabel->setWordWrap(true);//设置自动换行
     ui->imgLabel->setScaledContents(true);//图片自动适应标签大小
     setStyleSheet("#messageLabel { padding: 12px; }");
+
 }
 
 RecvBox::~RecvBox()

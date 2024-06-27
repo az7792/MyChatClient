@@ -12,6 +12,7 @@ public:
     explicit BoxList(QWidget *parent = nullptr);
     void addWidget(QWidget *widget);
     void deleteWidget(QWidget *widget);
+    void scrollToBottom();// 将滑动条滑到最下面
 signals:
 
 private:

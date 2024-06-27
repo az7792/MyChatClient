@@ -128,8 +128,14 @@
          </item>
          <item>
           <widget class="QLabel" name="unReadLabel">
+           <property name="styleSheet">
+            <string notr="true">#unReadLabel{ color : red; }</string>
+           </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
