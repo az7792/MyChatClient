@@ -28,6 +28,7 @@ private:
     int groupid=-1;
     int ownerid = -1;
     QString groupname;
+    QPixmap Avatar();
 };
 
 #endif // GROUP_H

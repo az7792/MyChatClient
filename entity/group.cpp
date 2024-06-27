@@ -2,8 +2,8 @@
 
 Group::Group() {}
 
-Group::Group(int groupid, QString groupname, int ownerid)
-    : groupid(groupid), ownerid(ownerid),groupname(groupname)
+Group::Group(int groupid, QString groupname, int ownerid,QPixmap Avatar)
+    : groupid(groupid), ownerid(ownerid),groupname(groupname),Avatar(Avatar)
 {
 
 }
@@ -39,21 +39,12 @@ void Group::setOwnerid(int ownerid) {
 
 Group Group::toGroup(QJsonObject jsonObject)
 {
-    //az77927792
-    // 解析响应
     if(jsonObject.isEmpty())
         return Group();
-    // QString avatarString = jsonObject["avatar"].toString();
-    // // 将Base64字符串转换为QPixmap
-    // QByteArray byteArray = QByteArray::fromBase64(avatarString.toUtf8());
-    // QPixmap avatar;
-    // if (!byteArray.isEmpty()) {
-    //     avatar.loadFromData(byteArray);
-    // }
-    Group group(jsonObject["groupid"].toInt(),jsonObject["groupname"].toString(),jsonObject["ownerid"].toInt());
+    Group group(jsonObject["groupid"].toInt(),jsonObject["groupname"].toString(),jsonObject["ownerid"].toInt(),jsonObject["avatar"].toString());
     return group;
 }
 QPixmap Group::getAvatar()
 {
-    return QPixmap(":/img/resources/defaultAvatar.jpg");
+    return Avatar;
 }
