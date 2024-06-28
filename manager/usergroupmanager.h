@@ -61,6 +61,8 @@ public:
     static QVector<int> getUidsByUid(int uid);
     static QVector<int> getGidsByUid(int uid);
 
+    friend class AddForm; // 声明 AddForm 为友元类
+
 private:
     static QNetworkAccessManager networkManager;
     static QJsonDocument sendPostRequest(QString endpoint, QUrlQuery postData);

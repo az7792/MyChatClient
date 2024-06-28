@@ -99,6 +99,7 @@ void MainWindow::showGroups()
 void MainWindow::showAddForm()
 {
     AddForm *addForm = new AddForm(); // 创建新的AddForm窗口
+    addForm->setUserId(user.getUID());
     addForm->show();                  // 显示新的窗口
 }
 
