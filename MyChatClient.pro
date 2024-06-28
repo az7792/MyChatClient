@@ -20,6 +20,7 @@ SOURCES += \
     entity/user.cpp \
     main.cpp \
     manager/usergroupmanager.cpp \
+    manager/windowmanager.cpp \
     smallWidget/addform.cpp \
     smallWidget/friendbox.cpp \
     smallWidget/loginform.cpp \
@@ -30,7 +31,7 @@ SOURCES += \
     smallWidget/sendbox.cpp \
     smallWidget/sidebar.cpp \
     smallWidget/userinfoeditdialog.cpp \
-    window/mainwidow.cpp \
+    window/mainwindow.cpp \
     window/userauthwindow.cpp
 
 HEADERS += \
@@ -44,6 +45,7 @@ HEADERS += \
     entity/message.h \
     entity/user.h \
     manager/usergroupmanager.h \
+    manager/windowmanager.h \
     smallWidget/addform.h \
     smallWidget/boxlist.h \
     smallWidget/friendbox.h \
@@ -55,7 +57,7 @@ HEADERS += \
     smallWidget/sendbox.h \
     smallWidget/sidebar.h \
     smallWidget/userinfoeditdialog.h \
-    window/mainwidow.h \
+    window/mainwindow.h \
     window/userauthwindow.h
 
 FORMS += \

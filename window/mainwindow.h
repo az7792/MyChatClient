@@ -1,5 +1,5 @@
-#ifndef MAINWIDOW_H
-#define MAINWIDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QWidget>
 #include "boxList/messageboxlist.h"
@@ -43,4 +43,4 @@ signals:
     void logout();
 };
 
-#endif // MAINWIDOW_H
+#endif // MAINWINDOW_H
