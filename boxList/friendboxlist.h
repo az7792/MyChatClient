@@ -13,7 +13,7 @@ public:
     void addFriendBox(FriendBox *friendBox);
     void deleteFriendBox(int id);
     void updataFriendBoxsByIds(QVector<int>ids);
-private:
+protected:
     QMap<int,FriendBox*> friendBoxMap;
 
 signals:

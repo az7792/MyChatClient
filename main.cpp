@@ -16,6 +16,7 @@
 #include<window/mainwidow.h>
 #include <smallWidget/friendbox.h>
 #include <boxList/friendboxlist.h>
+#include <boxList/groupboxlist.h>
 #include <QVector>
 int main(int argc, char *argv[])
 {
@@ -28,9 +29,14 @@ int main(int argc, char *argv[])
     //FriendBox *fbb = new FriendBox(UserGroupManager::getGroupByGid(20));
     //fbb->show();
     FriendBoxList *fbl = new FriendBoxList(nullptr);
-    QVector<int>ids = UserGroupManager::getIdsByUid(1);
+    QVector<int>ids = UserGroupManager::getUidsByUid(1);
     fbl->updataFriendBoxsByIds(ids);
     fbl->show();
+
+    GroupBoxList *gbl = new GroupBoxList(nullptr);
+    QVector<int>gids = UserGroupManager::getGidsByUid(1);
+    gbl->updataGroupBoxsByIds(gids);
+    gbl->show();
     return a.exec();
     /*/------------测试------------------
     //测试邮箱是否存在

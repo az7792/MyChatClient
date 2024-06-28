@@ -58,7 +58,8 @@ public:
     static QVector<User> getContactList(int Uid);
     static QVector<User> getGroupMembers(int Gid);
     static QVector<Group> getGroupList(int Uid);
-    static QVector<int> getIdsByUid(int uid);
+    static QVector<int> getUidsByUid(int uid);
+    static QVector<int> getGidsByUid(int uid);
 
 private:
     static QNetworkAccessManager networkManager;
