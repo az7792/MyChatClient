@@ -37,8 +37,7 @@ void FriendBoxList::updataFriendBoxsByIds(QVector<int> ids)
         {
             //添加新的好友框
             FriendBox *newFriendBox = new FriendBox(UserGroupManager::getUser(id));
-            friendBoxMap.insert(id,newFriendBox);
-            this->addWidget(newFriendBox);
+            addFriendBox(newFriendBox);
         }
     }
 }

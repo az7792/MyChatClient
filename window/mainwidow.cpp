@@ -9,8 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
     stackedWidget = new QStackedWidget(this);
     chatForm = new ChatForm(this);
     messageBoxList = new MessageBoxList(this); // 消息控件列表 0
+    friendBoxList = new FriendBoxList(this); // 消息控件列表 1
+    groupBoxList = new GroupBoxList(this); // 消息控件列表 2
 
     stackedWidget->addWidget(messageBoxList); // 第0页
+    stackedWidget->addWidget(friendBoxList); // 第1页
+    stackedWidget->addWidget(groupBoxList); // 第2页
     stackedWidget->setCurrentIndex(0);
     stackedWidget->setMaximumWidth(200);
     stackedWidget->setMinimumWidth(100);
@@ -33,8 +37,29 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sidebar, &Sidebar::onAddClicked, this, &MainWindow::showAddForm); // 连接添加按钮信号
     // 将ChatForm收到消息转到MessageBoxList
     connect(chatForm, &ChatForm::saveToMessageBox, messageBoxList, &MessageBoxList::updataMessageBox);
+
     // 从MessageBoxList的某个MessageBox转到ChatForm
     connect(messageBoxList, &MessageBoxList::passMessageBox, chatForm, &ChatForm::onMessageBoxPass);
+
+    // 从FriendBoxList的某个FriendBox转到匿名函数
+    connect(friendBoxList,&FriendBoxList::passFriendBox,this,[=](FriendBox *friendBox){
+        showMessages();
+        if(messageBoxList->hasMessageBox(qMakePair(friendBox->id,friendBox->chatType)))
+            return;
+        User tmpUser = UserGroupManager::getUser(friendBox->id);
+        MessageBox * newMessageBox = messageBoxList->getMessageBoxByUser(tmpUser);
+        messageBoxList->addMessageBox(newMessageBox);
+    });
+
+    // 从GroupBoxList的某个FriendBox转到匿名函数
+    connect(groupBoxList,&GroupBoxList::passFriendBox,this,[=](FriendBox *friendBox){
+         showMessages();
+        if(messageBoxList->hasMessageBox(qMakePair(friendBox->id,friendBox->chatType)))
+            return;
+        Group tmpGroup = UserGroupManager::getGroupByGid(friendBox->id);
+        MessageBox * newMessageBox = messageBoxList->getMessageBoxByGroup(tmpGroup);
+        messageBoxList->addMessageBox(newMessageBox);
+    });
 }
 
 MainWindow::~MainWindow() {}
@@ -59,12 +84,16 @@ void MainWindow::showMessages()
 
 void MainWindow::showFriends()
 {
-    // 实现显示朋友列表的逻辑
+    stackedWidget->setCurrentIndex(1);
+    QVector<int>ids = UserGroupManager::getUidsByUid(user.getUID());
+    friendBoxList->updataFriendBoxsByIds(ids);
 }
 
 void MainWindow::showGroups()
 {
-    // 实现显示群组列表的逻辑
+    stackedWidget->setCurrentIndex(2);
+    QVector<int>ids = UserGroupManager::getGidsByUid(user.getUID());
+    groupBoxList->updataGroupBoxsByIds(ids);
 }
 
 void MainWindow::showAddForm()
@@ -95,7 +124,7 @@ void MainWindow::showSetting(QPoint pos)
             });
 
             connect(userInfoEditDialog, &UserInfoEditDialog::editSuccess, this, [=](){
-                emit logout();
+                emit logout();//修改成功后让用户重新登录
             });
 
         } else if (action == action2) {//退出登录

@@ -13,6 +13,9 @@ public:
     void addMessageBox(MessageBox *messageBox);
     void deleteMessageBox(QPair<int,QString> index);
     void updataMessageBox(Message message);
+    bool hasMessageBox(QPair<int,QString> index);
+    MessageBox *getMessageBoxByUser(User tmpUser);
+    MessageBox *getMessageBoxByGroup(Group tmpGroup);
     int UID=-1;
 private:
     QMap<QPair<int,QString>,MessageBox*> messageBoxMap;

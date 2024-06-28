@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include "boxList/messageboxlist.h"
+#include "boxList/friendboxlist.h"
+#include "boxList/groupboxlist.h"
 #include "smallWidget/sidebar.h"
 #include "chat/chatform.h"
 #include "smallWidget/userinfoeditdialog.h"
 #include <QStackedWidget>
 #include "smallWidget/addform.h"
 #include <QMenu>
-
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -28,6 +29,8 @@ private:
     AddForm *addForm;
 
     MessageBoxList *messageBoxList;
+    FriendBoxList *friendBoxList;
+    GroupBoxList *groupBoxList;
 
 private slots:
     void showMessages();
