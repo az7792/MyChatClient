@@ -14,12 +14,17 @@
 #include<boxList/boxlist.h>
 #include<smallWidget/sidebar.h>
 #include<window/mainwidow.h>
+#include <smallWidget/friendbox.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow mw;
-    mw.show();
-    mw.setUser(UserGroupManager::getUser(1));
+    // MainWindow mw;
+    // mw.show();
+    // mw.setUser(UserGroupManager::getUser(1));
+    FriendBox *fb = new FriendBox(UserGroupManager::getUser(1));
+    fb->show();
+    FriendBox *fbb = new FriendBox(UserGroupManager::getGroupByGid(20));
+    fbb->show();
     return a.exec();
     /*/------------测试------------------
     //测试邮箱是否存在

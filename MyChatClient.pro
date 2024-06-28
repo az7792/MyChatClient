@@ -19,6 +19,7 @@ SOURCES += \
     main.cpp \
     manager/usergroupmanager.cpp \
     smallWidget/addform.cpp \
+    smallWidget/friendbox.cpp \
     smallWidget/loginform.cpp \
     smallWidget/messagebox.cpp \
     smallWidget/recvbox.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     manager/usergroupmanager.h \
     smallWidget/addform.h \
     smallWidget/boxlist.h \
+    smallWidget/friendbox.h \
     smallWidget/loginform.h \
     smallWidget/messagebox.h \
     smallWidget/recvbox.h \
@@ -54,6 +56,7 @@ HEADERS += \
 
 FORMS += \
     chat/chatform.ui \
+    smallWidget/friendbox.ui \
     smallWidget/loginform.ui \
     smallWidget/messagebox.ui \
     smallWidget/recvbox.ui \
