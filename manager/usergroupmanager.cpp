@@ -1,7 +1,7 @@
 #include "usergroupmanager.h"
 
 
-const QString UserGroupManager::HOST_NAME = "localhost";
+const QString UserGroupManager::HOST_NAME = "123.56.155.4";
 const int UserGroupManager::PORT = 8080;
 const QString UserGroupManager::BASE_URL = "http://" + UserGroupManager::HOST_NAME + ":" + QString::number(UserGroupManager::PORT) + "/";
 QNetworkAccessManager UserGroupManager::networkManager;

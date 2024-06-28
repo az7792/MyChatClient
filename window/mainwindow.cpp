@@ -73,7 +73,7 @@ void MainWindow::setUser(User user)
     sidebar->setAvatar(user.getAvatar());
 
     // 连接websocket服务器
-    websocket.connectToServer(QUrl("ws://localhost:8080/chat/" + QString::number(user.getUID())));
+    websocket.connectToServer(QUrl("ws://123.56.155.4:8080/chat/" + QString::number(user.getUID())));
     // 连接websocket的信号
 }
 
