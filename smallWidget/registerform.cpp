@@ -117,7 +117,7 @@ void RegisterForm::on_registerPushButton_clicked()
         QMessageBox::warning(this,"","注册失败,请检查信息是否填写错误");
         return;
     }
-    bool success = false;
+    int UID = -1;
     QString username = ui->userNameLineEdit->text();
     QString email = ui->accountLineEdit->text();
     QString password = ui->passwordLineEdit1->text();
@@ -126,10 +126,10 @@ void RegisterForm::on_registerPushButton_clicked()
         QMessageBox::warning(this,"","注册失败,验证码错误");
         return;
     }
-    success = UserGroupManager::registerUser(username,email,password,ui->avatarLabel->pixmap());
-    if(success){
+    UID = UserGroupManager::registerUser(username,email,password,ui->avatarLabel->pixmap());
+    if(UID!=-1){
         emit registered();
-        QMessageBox::information(this, "注册成功", "注册成功");
+        QMessageBox::information(this, "注册成功", "注册成功,你的UID是:"+QString::number(UID));
     }else{
         QMessageBox::warning(this, "注册失败", "注册失败，请重试");
     }

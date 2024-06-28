@@ -90,7 +90,7 @@ bool UserGroupManager::login(int UID, QString password)
 }
 
 // 注册请求
-bool UserGroupManager::registerUser(QString username, QString email, QString password, QPixmap pixmap)
+int UserGroupManager::registerUser(QString username, QString email, QString password, QPixmap pixmap)
 {
     // 验证数据格式
     if (isUsernameValid(username) == false)
@@ -124,11 +124,14 @@ bool UserGroupManager::registerUser(QString username, QString email, QString pas
 
     // 解析响应
     bool success = false;
+    int UID=-1;
     if (!jsonDocument.isEmpty())
     {
         success = jsonDocument.object()["success"].toBool();
+        if(success)
+            UID = jsonDocument.object()["UID"].toInt();
     }
-    return success;
+    return UID;
 }
 
 //更新用户信息
