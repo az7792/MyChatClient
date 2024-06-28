@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sidebar, &Sidebar::onFriendsClicked, this, &MainWindow::showFriends);
     connect(sidebar, &Sidebar::onGroupsClicked, this, &MainWindow::showGroups);
     connect(sidebar, &Sidebar::onSettingClicked, this, &MainWindow::showSetting);
-    connect(sidebar, &Sidebar::onAddClicked, this, &MainWidow::showAddForm); // 连接添加按钮信号
+    connect(sidebar, &Sidebar::onAddClicked, this, &MainWindow::showAddForm); // 连接添加按钮信号
     // 将ChatForm收到消息转到MessageBoxList
     connect(chatForm, &ChatForm::saveToMessageBox, messageBoxList, &MessageBoxList::updataMessageBox);
     // 从MessageBoxList的某个MessageBox转到ChatForm
@@ -67,7 +67,7 @@ void MainWindow::showGroups()
     // 实现显示群组列表的逻辑
 }
 
-void MainWidow::showAddForm()
+void MainWindow::showAddForm()
 {
     AddForm *addForm = new AddForm(); // 创建新的AddForm窗口
     addForm->show();                  // 显示新的窗口
