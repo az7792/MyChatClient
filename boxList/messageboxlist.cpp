@@ -13,7 +13,7 @@ MessageBoxList::~MessageBoxList()
 
 void MessageBoxList::addMessageBox(MessageBox *messageBox)
 {
-    //以及存在
+    //已经存在
     if(messageBoxMap.find(qMakePair(messageBox->id,messageBox->chatType)) != messageBoxMap.end())
         return;
     //添加新的

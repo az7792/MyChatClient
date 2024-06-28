@@ -15,16 +15,22 @@
 #include<smallWidget/sidebar.h>
 #include<window/mainwidow.h>
 #include <smallWidget/friendbox.h>
+#include <boxList/friendboxlist.h>
+#include <QVector>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     // MainWindow mw;
     // mw.show();
     // mw.setUser(UserGroupManager::getUser(1));
-    FriendBox *fb = new FriendBox(UserGroupManager::getUser(1));
-    fb->show();
-    FriendBox *fbb = new FriendBox(UserGroupManager::getGroupByGid(20));
-    fbb->show();
+    //FriendBox *fb = new FriendBox(UserGroupManager::getUser(1));
+   // fb->show();
+    //FriendBox *fbb = new FriendBox(UserGroupManager::getGroupByGid(20));
+    //fbb->show();
+    FriendBoxList *fbl = new FriendBoxList(nullptr);
+    QVector<int>ids = UserGroupManager::getIdsByUid(1);
+    fbl->updataFriendBoxsByIds(ids);
+    fbl->show();
     return a.exec();
     /*/------------测试------------------
     //测试邮箱是否存在

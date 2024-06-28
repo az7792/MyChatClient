@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     boxList/boxlist.cpp \
+    boxList/friendboxlist.cpp \
     boxList/messageboxlist.cpp \
     chat/chatform.cpp \
     chat/chatwebsocket.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
     boxList/boxlist.h \
+    boxList/friendboxlist.h \
     boxList/messageboxlist.h \
     chat/chatform.h \
     chat/chatwebsocket.h \

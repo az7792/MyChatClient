@@ -6,6 +6,7 @@ FriendBox::FriendBox(QWidget *parent)
     , ui(new Ui::FriendBox)
 {
     ui->setupUi(this);
+    this->setBackgroundColor(QColor(255,255,255));
 }
 
 FriendBox::FriendBox(User user, QWidget *parent)
@@ -17,6 +18,7 @@ FriendBox::FriendBox(User user, QWidget *parent)
     setAvatar(user.getAvatar());
     setId(user.getUID());
     setChatType("user");
+    this->setBackgroundColor(QColor(255,255,255));
 }
 
 FriendBox::FriendBox(Group group, QWidget *parent) :
@@ -28,6 +30,7 @@ FriendBox::FriendBox(Group group, QWidget *parent) :
     setAvatar(group.getAvatar());
     setId(group.getGroupid());
     setChatType("group");
+    this->setBackgroundColor(QColor(255,255,255));
 }
 
 FriendBox::~FriendBox()
