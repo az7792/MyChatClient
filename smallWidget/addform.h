@@ -16,6 +16,7 @@ class AddForm : public QWidget
 public:
     explicit AddForm(QWidget *parent = nullptr);
     void setUserId(int userId);
+    int getUserId();
     int status = 0;
 
 private slots:
@@ -23,6 +24,7 @@ private slots:
     void onFindUserButtonClicked();
     void onFindGroupButtonClicked();
     void onSearchButtonClicked();
+    void onAddButtonClicked(int userId,int targetUserId,int kind);
 
 private:
     void setupUI();
@@ -30,7 +32,8 @@ private:
     void clearPreviousSearchResult();
     void displayUser(User &user);
     void displayGroup(Group &group);
-    void displayGroupandUser(Group &group,User &user);
+    void displayGroupandUser(Group &group, User &user);
+
 
     int userId; // 保存当前用户ID
 

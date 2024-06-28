@@ -59,6 +59,8 @@ public:
     static QVector<User> getGroupMembers(int Gid);
     static QVector<Group> getGroupList(int Uid);
 
+    friend class AddForm; // 声明 AddForm 为友元类
+
 private:
     static QNetworkAccessManager networkManager;
     static QJsonDocument sendPostRequest(QString endpoint, QUrlQuery postData);
